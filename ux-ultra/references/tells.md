@@ -4,10 +4,13 @@ These are the looks an undirected model reaches for. None is wrong for every bri
 
 Banning one wave only moves the output to the next. The second wave below appeared after the first was widely banned, so expect a third. The durable fix is a decision tied to the subject, not a longer list.
 
+Checked against 2026 design commentary on 2026-11-18. Both the first and second waves are still named as current giveaways, so neither has aged out. Check again when this note is more than a year old.
+
 ## First wave (the "vibe-coded" look)
 
 - Inter, Roboto or system sans for everything, no display face.
-- Indigo, violet or purple as the accent (`indigo-500` and neighbours), often as an indigo-to-blue gradient, often on headline text.
+- Indigo, violet or purple as the accent (`indigo-500` and neighbours), often as an indigo-to-blue gradient, often on headline text. Cyan on a dark background is the same default in another colour.
+- Every block of text centred, with nothing left-aligned or asymmetric anywhere on the page.
 - Centred hero with a pill badge above the headline and two buttons below.
 - Three identical cards with an icon on top, then a stats row, then a "how it works" 1-2-3, then a closing CTA band.
 - One large radius and one soft shadow (`rgba(0,0,0,.1)`, `shadow-lg`) on every card.
@@ -15,7 +18,8 @@ Banning one wave only moves the output to the next. The second wave below appear
 - Every section fades and slides up on scroll.
 - Always-dark mode with grey body text and uppercase labels.
 - shadcn/ui or another kit left in its default theme.
-- Filler copy: "Elevate your workflow", "Unlock the power of", "Seamless", "Supercharge".
+- Filler copy: "Elevate your workflow", "Unlock the power of", "Seamless", "Supercharge", and two-beat slogans that say nothing ("Build faster. Ship smarter.").
+- Placeholder people: testimonials and avatars from "Sarah Johnson", "John Doe" or "Jane Smith". Use real quotes the user gave, or leave the section out.
 
 ## Second wave (what replaced it)
 
