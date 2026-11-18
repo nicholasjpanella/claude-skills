@@ -6,11 +6,11 @@ Version facts go stale within months. Each row has the date it was last checked;
 
 | Fact | Rule | Checked |
 |---|---|---|
-| Next.js 16.3 writes a managed `AGENTS.md` that points at docs bundled for the installed version, and warns that its APIs differ from older training data | In a Next project, read `AGENTS.md` and the bundled docs before writing routing, data or caching code | 2026-11-13 |
-| React 19.3: `<ViewTransition>` and Fragment Refs are stable; React Compiler 1.0 is stable | Use `<ViewTransition>` for page and state transitions instead of hand-rolled animation libraries when the project is on 19.3+; still honour reduced motion | 2026-11-13 |
+| Next.js 16.3+ writes a managed `AGENTS.md` that points at docs bundled for the installed version, and warns that its APIs differ from older training data. The current line is 16.4; the November 2026 security release patched seven advisories in 16.4.5 and 15.5.29 | In a Next project, read `AGENTS.md` and the bundled docs before writing routing, data or caching code. If the project is on 16.x below 16.4.5 or 15.x below 15.5.29, tell the user it's missing security patches | 2026-11-18 |
+| React 19.3 (Sep 2026): `<ViewTransition>` and Fragment Refs are stable; React Compiler 1.0 is stable | Use `<ViewTransition>` for page and state transitions instead of hand-rolled animation libraries when the project is on 19.3+; still honour reduced motion | 2026-11-18 |
 | shadcn/ui CLI v4: Base UI became the default primitives in July 2026 (earlier projects use Radix) | Read `components.json` before assuming Radix or Base UI APIs; the two differ | 2026-11-13 |
 | Base UI 1.x is published as `@base-ui/react` | Import from the installed package name, not an older one you remember | 2026-11-13 |
-| Tailwind CSS v4: buttons use `cursor: default` by Preflight; v4.3 adds `scrollbar-gutter-stable` | Keep the cursor base layer; use `scrollbar-gutter-stable` on scroll containers that would shift when a scrollbar appears | 2026-11-13 |
+| Tailwind CSS v4 (4.3.x current): buttons use `cursor: default` by Preflight; v4.3 adds `scrollbar-gutter-stable` | Keep the cursor base layer; use `scrollbar-gutter-stable` on scroll containers that would shift when a scrollbar appears | 2026-11-18 |
 | ESLint 10 removed the old `.eslintrc` format | Generate only `eslint.config.*` | 2026-11-13 |
 | Vite 8 forwards browser console errors to the terminal when it detects a coding agent | Read the dev-server output after loading a page; errors may already be there | 2026-11-13 |
 | Astro 6 has a built-in Fonts API | In Astro, load fonts through it rather than hand-written `@font-face` | 2026-11-13 |
@@ -24,7 +24,8 @@ Version facts go stale within months. Each row has the date it was last checked;
 | `:has()`, CSS nesting | Widely available | Safe everywhere | 2026-11-13 |
 | Scroll-driven animations | Baseline (Oct 2026) | Allowed, but they move on their own: wrap them in `prefers-reduced-motion: no-preference` | 2026-11-13 |
 | Customisable `<select>` (`appearance: base-select`) | Chrome and Safari only | Progressive enhancement; the plain select must still work | 2026-11-13 |
-| Cross-document view transitions, `contrast-color()`, style queries | Interop 2026 targets, not yet everywhere | Use with a fallback | 2026-11-13 |
+| Container style queries | Baseline (May 2026) | Safe in current browsers; keep a sensible unstyled default for older ones | 2026-11-18 |
+| Cross-document view transitions, `contrast-color()` | Interop 2026 targets; `contrast-color()` reportedly Baseline in early 2026, but unconfirmed | Use with a fallback | 2026-11-18 |
 
 ## Tokens
 
