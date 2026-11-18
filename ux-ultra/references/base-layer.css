@@ -1,0 +1,47 @@
+/*
+  Project-wide polish defaults. Offer to add these when the project has nothing
+  equivalent; each one fixes a whole class of misses no matter what is written later.
+  Adjust to DESIGN.md: the cursor rule follows the project's chosen convention,
+  the focus colour comes from its accent token, the scroll margin from its header height.
+
+  Tailwind v4: put this after `@import "tailwindcss";` inside `@layer base { ... }`.
+  Plain CSS: put it near the top of the main stylesheet.
+*/
+
+/* Hand cursor on actionable controls (Tailwind v4 removed it from buttons). Never on disabled ones. */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+summary,
+label[for],
+select:not(:disabled),
+input[type="checkbox"]:not(:disabled),
+input[type="radio"]:not(:disabled) { cursor: pointer; }
+:disabled,
+[aria-disabled="true"] { cursor: not-allowed; }
+
+/* One visible focus ring for keyboard users; mouse clicks don't show it. */
+:focus-visible { outline: 2px solid var(--focus, currentColor); outline-offset: 2px; }
+
+/* No double-tap zoom delay on controls. */
+a, button, input, select, textarea, label, summary, [role="button"] { touch-action: manipulation; }
+
+/* Even line breaks. */
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+
+/* Anchors land below a sticky header; set to the header height. */
+[id] { scroll-margin-top: 5rem; }
+
+/* iOS zooms into inputs with text under 16px. */
+@media (max-width: 640px) {
+  input, select, textarea { font-size: max(16px, 1em); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

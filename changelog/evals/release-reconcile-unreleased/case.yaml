@@ -1,0 +1,13 @@
+schema_version: "1.1"
+name: release-reconcile-unreleased
+expected_outcome: |
+  The [Unreleased] section is reconciled against git and becomes
+  "## [1.4.0] - <today>": the dark mode entry is removed (its commit was
+  reverted), the two CSV export entries are merged into one, "Added: fixed a
+  crash when opening an empty file" moves under Fixed, and the unlogged
+  "Remember last opened folder between launches" commit gets an Added entry.
+  "Tidy render.js" produces nothing. An empty [Unreleased] heading may remain
+  above. The [1.3.0] section is untouched. package.json already says 1.4.0.
+  Committed, no attribution.
+context:
+  scaffold_script: place-files.sh

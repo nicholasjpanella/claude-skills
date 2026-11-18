@@ -1,0 +1,12 @@
+schema_version: "1.1"
+name: unversioned-date-heading
+expected_outcome: |
+  The user did not mention the changelog, but the repo has one with
+  date-stamped headings and the fix is user-visible, so the skill should
+  update it unprompted. CHANGELOG.md gains a "## <today>" section (no version
+  exists anywhere) with a Fixed entry in plain terms: files with dates before
+  1970 go into an "undated" folder instead of crashing the script. The
+  existing 2025-10-02 and 2025-09-20 sections are untouched. Committed in the
+  repo's plain capitalised-imperative style, no attribution.
+context:
+  scaffold_script: place-files.sh

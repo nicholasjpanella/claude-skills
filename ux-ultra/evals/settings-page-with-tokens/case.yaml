@@ -1,0 +1,18 @@
+schema_version: "1.1"
+name: settings-page-with-tokens
+expected_outcome: |
+  settings.html uses only the colours, fonts, radii and components DESIGN.md
+  defines (slop_lint reports no errors; no new hex values, no soft shadows,
+  no gradients, no icons in buttons). Every action has its unhappy path:
+  buttons disable and say what is happening while a request runs, the
+  account loads with a loading state and an error state with a retry, field
+  errors appear under the field and are linked with aria-describedby, API
+  failures show a specific message in the DESIGN.md voice. Delete account
+  asks for confirmation (typing the email) in a dialog that traps focus and
+  closes on Escape. index.html links to the page. Button copy names the
+  action ("Save name", "Delete account"), not "Submit". The stylesheet has no
+  cursor rule, so the run must set one; the account email is 56 characters and
+  must not overflow at 375px; focus lands on new content after a delete or a
+  retry, never on <body>.
+context:
+  scaffold_script: place-files.sh

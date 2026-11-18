@@ -1,0 +1,14 @@
+schema_version: "1.1"
+name: greenfield-bike-shop
+expected_outcome: |
+  Before building, the run records its decisions: a DESIGN.md in ./site with a
+  tokens block of 4 to 6 named colours and named typefaces drawn from the
+  subject (a bike workshop in Leeds), not first- or second-wave defaults, and
+  a note of three directions considered with the chosen one. CLAUDE.md points
+  at DESIGN.md. The page uses only those tokens (slop_lint reports no errors),
+  carries the real content (services, both prices, hours, address), and the
+  booking form has labels, required-field errors and a sent/failed state.
+  The run either checks the page in a browser at desktop and phone widths or
+  says plainly that it couldn't; it doesn't claim a visual check it didn't do.
+context:
+  scaffold_script: place-files.sh

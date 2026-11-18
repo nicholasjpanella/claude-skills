@@ -1,0 +1,52 @@
+:root {
+  --paper: #FAF8F2;
+  --surface: #FFFFFF;
+  --ink: #1F2A24;
+  --muted: #5D6A62;
+  --accent: #1E6B4A;
+  --danger: #A63A2B;
+  --rule: #DDD8CC;
+  --r-sm: 4px;
+  --r-md: 8px;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 16px/24px "Public Sans", sans-serif;
+}
+h1, h2 { font-family: "Literata", serif; font-weight: 600; }
+h1 { font-size: 32px; line-height: 40px; margin: 0 0 24px; }
+h2 { font-size: 20px; line-height: 28px; margin: 0 0 16px; }
+
+.nav { display: flex; gap: 24px; padding: 16px 32px; border-bottom: 1px solid var(--rule); }
+.nav a { color: var(--ink); text-decoration: none; }
+.nav a[aria-current="page"] { color: var(--accent); font-weight: 600; }
+.nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+main { max-width: 880px; margin: 0 auto; padding: 32px; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 0 var(--rule); }
+
+.ledger { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.ledger th, .ledger td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--rule); }
+.ledger td.amount { text-align: right; }
+
+.btn { font: 500 14px/20px "Public Sans", sans-serif; padding: 8px 16px; border-radius: var(--r-sm); border: 1px solid var(--rule); background: var(--surface); color: var(--ink); transition: background-color 120ms, color 120ms; }
+.btn:hover { background: var(--paper); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.btn-primary:hover { background: var(--ink); border-color: var(--ink); }
+.btn-danger { background: var(--surface); border-color: var(--danger); color: var(--danger); }
+.btn-danger:hover { background: var(--danger); color: var(--surface); }
+.btn:disabled { opacity: .55; }
+
+.field { display: grid; gap: 4px; margin-bottom: 16px; }
+.field label { font-size: 14px; line-height: 20px; font-weight: 500; }
+.field input { font: inherit; padding: 8px 12px; border: 1px solid var(--rule); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); }
+.field input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.notice { padding: 12px 16px; border-radius: var(--r-sm); border: 1px solid var(--rule); margin-bottom: 16px; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

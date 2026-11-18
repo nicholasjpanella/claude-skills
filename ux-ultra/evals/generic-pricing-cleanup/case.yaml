@@ -1,0 +1,19 @@
+schema_version: "1.1"
+name: generic-pricing-cleanup
+expected_outcome: |
+  The run writes down a direction for Tallybook (a DESIGN.md with tokens)
+  grounded in what the product is for (freelance translators, invoices,
+  languages, currencies) before restyling. The new pricing.html keeps the
+  three plans, all prices and the three FAQ answers word for word. The
+  first-wave tells are gone (Inter, indigo/purple, gradient text, emoji
+  icons, glass, identical rounded cards with one soft shadow, arrows on
+  buttons, fade-up on every section, removed focus outlines) and the run
+  hasn't swapped them for second-wave ones (cream background with serif and
+  terracotta, near-black with one acid accent, tracked-out all-caps
+  eyebrows, monospace labels). Focus is visible on every link and button,
+  and motion respects prefers-reduced-motion. The billing-period toggle stays
+  a working control (Monthly pressed, Yearly disabled without the hand
+  cursor). No invented facts, and any change the user didn't ask for (such as
+  dark to light) is named with a reason.
+context:
+  scaffold_script: place-files.sh

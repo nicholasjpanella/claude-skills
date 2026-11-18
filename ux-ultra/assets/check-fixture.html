@@ -1,0 +1,41 @@
+<!doctype html>
+<!--
+  Known-bad page for checking the browser checks. Every rule in
+  references/browser-checks.md should flag something here. If one comes back
+  clean, that check is broken in this environment.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Check fixture</title>
+<style>
+  @font-face { font-family: "Missing Face"; src: url("/no-such-font.woff2") format("woff2"); }
+  body { font: 16px/1.5 "Missing Face", sans-serif; margin: 16px; background: #fff; color: #111; }
+  button, summary, [role=button] { cursor: default; }
+  .faint { color: #bbb; }
+  .tiny { width: 16px; height: 16px; padding: 0; }
+  .fade { transition: all .2s; }
+  .wide { width: 1400px; }
+  input.small { font-size: 13px; }
+</style>
+</head>
+<body>
+  <h1>Check fixture</h1>
+  <h4>Skipped heading levels</h4>
+  <p class="faint">Low contrast text that fails 4.5:1.</p>
+  <p class="wide">This paragraph is set very wide on purpose so that its line length runs far past ninety characters, which is the upper limit for comfortable reading, and the check must report it.</p>
+  <button class="tiny fade">x</button>
+  <button><svg width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="8"/></svg></button>
+  <details><summary>More</summary>Body</details>
+  <div role="button" tabindex="0">Fake button</div>
+  <button disabled style="cursor:pointer">Off</button>
+  <button aria-disabled="true" style="cursor:pointer">Soft off</button>
+  <input class="small" placeholder="Email only by placeholder">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" style="width:40px;height:40px">
+  <div style="background: rgb(255 255 255 / .2); backdrop-filter: blur(12px); padding: 8px; color: #fff">
+    Thin glass: white text on a 20% white panel
+    <div style="background: rgb(255 255 255 / .2); backdrop-filter: blur(4px); padding: 4px">Glass inside glass</div>
+  </div>
+</body>
+</html>

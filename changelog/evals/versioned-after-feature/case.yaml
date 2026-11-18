@@ -1,0 +1,13 @@
+schema_version: "1.1"
+name: versioned-after-feature
+expected_outcome: |
+  CHANGELOG.md gains a "## [0.3.0] - <today>" section (pyproject says 0.3.0,
+  latest tag is v0.2.0, so a release is in progress and the heading carries
+  the version and today's date). Under it, plain-language entries: Added for
+  --dry-run and --json, Fixed for the UTF-8 decoding change. The refactor,
+  CI workflow, README and version-bump commits produce no entries. No commit
+  hashes, no function names, no file paths. The [0.2.0] and [0.1.0] sections
+  are untouched. The changelog edit is committed (ideally in the same commit
+  as the feature), with no attribution lines.
+context:
+  scaffold_script: place-files.sh

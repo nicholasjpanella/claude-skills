@@ -1,0 +1,39 @@
+<!doctype html>
+<!--
+  Width harness for when the browser window can't be resized.
+  Serve it from the same origin as the page, then open:
+    frame.html?src=/index.html&w=375&h=812
+    frame.html?src=/index.html&w=1440&h=900
+  The page renders in an iframe of exactly w x h CSS px; media queries see that width.
+  If the window is narrower than w, the frame is scaled down to fit (the page inside
+  still lays out at w). Run the browser checks inside the frame with:
+    document.querySelector('iframe').contentWindow.eval(<checks script>)
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Width harness</title>
+<style>
+  html, body { margin: 0; background: #888; }
+  #wrap { transform-origin: 0 0; }
+  iframe { border: 0; display: block; background: #fff; }
+  #label { font: 12px/20px system-ui, sans-serif; color: #fff; padding: 0 8px; }
+</style>
+</head>
+<body>
+<div id="label"></div>
+<div id="wrap"><iframe></iframe></div>
+<script>
+  const q = new URLSearchParams(location.search);
+  const w = +(q.get('w') || 375), h = +(q.get('h') || 812), src = q.get('src') || '/';
+  const f = document.querySelector('iframe'), wrap = document.getElementById('wrap');
+  f.width = w; f.height = h; f.src = src;
+  const fit = () => {
+    const s = Math.min(1, innerWidth / w);
+    wrap.style.transform = `scale(${s})`;
+    document.getElementById('label').textContent = `${src} at ${w}x${h}` + (s < 1 ? `, shown at ${Math.round(s * 100)}%` : '');
+  };
+  addEventListener('resize', fit); fit();
+</script>
+</body>
+</html>

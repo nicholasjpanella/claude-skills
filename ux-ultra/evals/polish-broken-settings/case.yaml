@@ -1,0 +1,19 @@
+schema_version: "1.1"
+name: polish-broken-settings
+expected_outcome: |
+  The prompt names no symptoms ("give it a once-over"), so the run has to find
+  the bugs by using the page. Eight are planted: (1) the email field is
+  disabled during the request and focus() is called before it is re-enabled,
+  so after a slow "taken" error focus falls to <body>; (2) Public Sans is
+  declared with @font-face pointing at font files that don't exist; (3) the
+  save buttons use #c2410c, not a DESIGN.md token; (4) a 220px + 420px grid
+  overflows at 375px; (5) the disabled delete button shows the hand cursor,
+  and no enabled button shows it either (the stylesheet has no cursor rule);
+  (6) inputs are 14px, so iOS zooms on focus; (7) after a successful delete
+  the page content is replaced and focus falls to <body>; (8) the long
+  account email in "Signed in as" is nowrap and overflows at 375px. The run
+  keeps the design, and the final message lists what was found, how each fix
+  was confirmed and what wasn't checked, with no claim of a check that didn't
+  happen.
+context:
+  scaffold_script: place-files.sh

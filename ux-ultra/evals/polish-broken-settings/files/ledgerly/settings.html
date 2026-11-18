@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings · Ledgerly</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    @font-face { font-family: "Public Sans"; src: url("fonts/public-sans-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "Public Sans"; src: url("fonts/public-sans-500.woff2") format("woff2"); font-weight: 500; }
+    .settings-grid { display: grid; grid-template-columns: 220px 420px; gap: 24px; }
+    .settings-grid > h2 { margin: 0; }
+    .field input { font-size: 14px; }
+    .btn-save { background: #c2410c; border-color: #c2410c; color: #FFFFFF; }
+    .btn-danger:disabled { cursor: pointer; }
+    .field-error { color: var(--danger); font-size: 14px; margin: 0; }
+    details { margin-top: 8px; color: var(--muted); }
+    .signed-in { color: var(--muted); white-space: nowrap; margin: -16px 0 24px; }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Main">
+    <a href="index.html">Ledger</a>
+    <a href="#">Invoices</a>
+    <a href="#">Reports</a>
+    <a href="settings.html" aria-current="page">Settings</a>
+  </nav>
+  <main>
+    <h1>Settings</h1>
+    <p class="signed-in">Signed in as <strong id="current-email">…</strong></p>
+
+    <section class="panel settings-grid" aria-labelledby="name-h">
+      <h2 id="name-h">Display name</h2>
+      <form id="name-form" novalidate>
+        <div class="field">
+          <label for="name">Name on invoices</label>
+          <input id="name" name="name" autocomplete="name">
+          <p class="field-error" id="name-error" hidden></p>
+        </div>
+        <button class="btn btn-save" type="submit">Save name</button>
+        <p class="notice" id="name-status" role="status" hidden></p>
+      </form>
+    </section>
+
+    <section class="panel settings-grid" aria-labelledby="email-h">
+      <h2 id="email-h">Email</h2>
+      <form id="email-form" novalidate>
+        <div class="field">
+          <label for="email">Email for sign-in and receipts</label>
+          <input id="email" name="email" type="email" autocomplete="email">
+          <p class="field-error" id="email-error" hidden></p>
+        </div>
+        <button class="btn btn-save" type="submit">Save email</button>
+        <p class="notice" id="email-status" role="status" hidden></p>
+        <details>
+          <summary>Why we ask for your email</summary>
+          <p>Receipts and sign-in links go to this address. We never share it.</p>
+        </details>
+      </form>
+    </section>
+
+    <section class="panel settings-grid" aria-labelledby="delete-h">
+      <h2 id="delete-h">Delete account</h2>
+      <form id="delete-form" novalidate>
+        <p>This deletes your ledger, invoices and reports. It can't be undone.</p>
+        <div class="field">
+          <label for="confirm">Type your email to confirm</label>
+          <input id="confirm" name="confirm" type="email" autocomplete="off">
+          <p class="field-error" id="confirm-error" hidden></p>
+        </div>
+        <button class="btn btn-danger" type="submit" id="delete-btn" disabled>Delete account</button>
+      </form>
+    </section>
+  </main>
+
+  <script type="module">
+    import { getAccount, updateName, updateEmail, deleteAccount } from "./api.js";
+
+    const $ = id => document.getElementById(id);
+    const messages = {
+      network: "We couldn't reach Ledgerly. Check your connection and try again.",
+      empty: "Enter a name.",
+      invalid: "Enter an email address like name@example.com.",
+      taken: "That email is already used by another account.",
+      mismatch: "That doesn't match your account email.",
+    };
+    let account;
+
+    function fieldError(input, errEl, text) {
+      errEl.textContent = text;
+      errEl.hidden = !text;
+      input.setAttribute("aria-invalid", text ? "true" : "false");
+      if (text) input.setAttribute("aria-describedby", errEl.id); else input.removeAttribute("aria-describedby");
+    }
+
+    async function submit(form, input, errEl, statusEl, busyLabel, call, okText) {
+      const btn = form.querySelector("button[type=submit]");
+      const label = btn.textContent;
+      input.disabled = true; btn.disabled = true; btn.textContent = busyLabel;
+      fieldError(input, errEl, ""); statusEl.hidden = true;
+      try {
+        account = await call(input.value);
+        statusEl.textContent = okText; statusEl.className = "notice notice-ok"; statusEl.hidden = false;
+      } catch (e) {
+        const key = e.message in messages ? e.message : "network";
+        if (key === "network") {
+          statusEl.textContent = messages.network; statusEl.className = "notice notice-error"; statusEl.hidden = false;
+        } else {
+          fieldError(input, errEl, messages[key]);
+          input.focus();
+        }
+      } finally {
+        input.disabled = false; btn.disabled = false; btn.textContent = label;
+      }
+    }
+
+    $("name-form").addEventListener("submit", e => { e.preventDefault();
+      submit($("name-form"), $("name"), $("name-error"), $("name-status"), "Saving name…", updateName, "Name saved."); });
+    $("email-form").addEventListener("submit", e => { e.preventDefault();
+      submit($("email-form"), $("email"), $("email-error"), $("email-status"), "Saving email…", updateEmail, "Email saved."); });
+    $("confirm").addEventListener("input", () => { $("delete-btn").disabled = $("confirm").value !== account?.email; });
+    $("delete-form").addEventListener("submit", async e => { e.preventDefault();
+      try { await deleteAccount($("confirm").value); document.querySelector("main").innerHTML = "<h1>Account deleted</h1>"; }
+      catch (err) { fieldError($("confirm"), $("confirm-error"), messages[err.message] || messages.network); }
+    });
+
+    account = await getAccount().catch(() => null);
+    if (account) { $("name").value = account.name; $("email").value = account.email; $("current-email").textContent = account.email; }
+  </script>
+</body>
+</html>

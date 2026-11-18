@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: unversioned-same-day-merge
+expected_outcome: |
+  Same repo shape as unversioned-date-heading, but CHANGELOG.md already has a
+  "## <today>" section (an earlier change today added "Hidden files are
+  skipped"). The fix must be recorded under that existing section, as a
+  "### Fixed" group beside the existing "### Added", with exactly one heading
+  for today. The earlier entry stays. No version heading, since the project
+  declares no version. Committed in plain style, no attribution.
+context:
+  scaffold_script: place-files.sh
