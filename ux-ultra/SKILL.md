@@ -142,9 +142,11 @@ Run these in order; cheap and exact first, the screenshot last.
 
 3. **Exercise the unhappy path by hand.** Tab through the page and confirm focus is visible on every control and lands in a sensible order. Open each dialog and press Escape; Tab inside it and confirm focus stays inside, and that closing returns focus to the control that opened it. Force the empty, loading and error states you listed rather than waiting for them: `references/browser-checks.md` has snippets that make a request slow and fail with a chosen status. After each response, ask the page where focus is (`document.activeElement`) instead of reading the code: a `focus()` call on a field that is still disabled does nothing, and only running it shows that. Put a very long value in one field and an empty list in one view. Automated checkers miss all of this.
 
-4. **Screenshots.** A viewport screenshot per width, not full-page (full-page captures of long pages get downscaled until they're unreadable), plus one of each state that looks different (error, empty, loading). Take one more at desktop width with the page blurred (`document.body.style.filter = 'blur(6px)'`, then clear it): the focal point should still be obvious.
+4. **Do the task.** At 375px and at desktop width, carry out the brief's main task from the page a new visitor lands on, with real clicks and typing in the browser, and write down the steps it took ("landing → search → result → save: 4 taps"). Whether a UI is easy to use can't be judged from screenshots: in 2025 studies, model judges scored at chance on ease of use from static screens. A step that surprised you, a dead end or an extra tap is a P1 even when every screenshot looks fine.
 
-5. **Critique, score, subtract.** Score the screenshots, not the code, 0 to 4 on each of these, with one line of evidence each:
+5. **Screenshots.** A viewport screenshot per width, not full-page (full-page captures of long pages get downscaled until they're unreadable), plus one of each state that looks different (error, empty, loading). Take one more at desktop width with the page blurred (`document.body.style.filter = 'blur(6px)'`, then clear it): the focal point should still be obvious.
+
+6. **Critique, score, subtract.** Before scoring, add two rows written from this brief's outcome, such as "a first-time visitor reaches the signup from the landing page in 3 taps or fewer at 375px" or "the overdue invoices are the first thing on the screen". A scorecard written for the task tracks human preference better than a generic one. Score the screenshots and the task run, not the code, 0 to 4 on each row separately, with one line of evidence each. Never collapse them into one overall score:
 
    | Check | A 4 looks like |
    |---|---|
@@ -159,11 +161,13 @@ Run these in order; cheap and exact first, the screenshot last.
    | Copy | real, plain verbs, sentence case |
    | Rationale | each major choice has a reason and a named tradeoff |
 
-   Tag what's wrong P0 (broken or inaccessible) to P3 (taste). Keep it to the three most important P0/P1 issues, since a list of twenty gets skimmed. Fix them, re-screenshot, re-score. Then remove one decorative element that isn't earning its place. Your critique is breadth, not authority: models miss many issues an expert would catch, and are weakest at consistency across screens, so flag that for the user instead of scoring yourself a 4 on it.
+   Tag what's wrong P0 (broken or inaccessible) to P3 (taste). Keep it to the three most important P0/P1 issues, since a list of twenty gets skimmed. Say where each issue is: a cell from the grid overlay in `references/browser-checks.md`, or a named element. Models are poor at locating problems on a screenshot without markers. Fix them, re-run the lint, re-screenshot and re-score. The lint matters on every cycle, because code quality tends to slip as visual fixes pile up. Stop after three cycles at most, or sooner when a cycle finds no P0 or P1. Keep the best-scoring version, not just the last one, and say which you kept. Then remove one decorative element that isn't earning its place.
 
-6. **Hand back.** In the message to the user, say:
+   Your critique is breadth, not authority. Use it to catch obvious defects. Don't use it to settle close calls: model judges are barely better than chance when two designs are close, and even professional designers agree weakly there. When two options score within a point of each other, show both to the user and let them choose. Don't silently drop an issue because a second look disagrees with the first; mark it "unsure" and keep it. Models also miss many issues an expert would catch and are weakest at consistency across screens, so flag that for the user instead of scoring yourself a 4 on it.
+
+7. **Hand back.** In the message to the user, say:
    - the direction and why, the tradeoffs it accepts, and what you cut;
-   - which widths you measured (and how, if you used the frame), which states you triggered, what you tabbed through and which overlays you closed with Escape, what the checks found and what you changed;
+   - which widths you measured (and how, if you used the frame), which states you triggered, what you tabbed through and which overlays you closed with Escape, the task run's steps at each width, what the checks found and what you changed;
    - anything you didn't check, and any copy you changed that the user didn't ask you to change;
    - two to four open questions where the user's intent decides, not your taste.
 

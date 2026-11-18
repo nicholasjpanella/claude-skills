@@ -124,6 +124,25 @@ It is async because it waits for web fonts to settle; every tool's JavaScript ca
 
 The background estimate walks up to the first opaque ancestor, so text over images or gradients can be reported wrongly; check those by eye in the screenshot. Hidden states (an error message that only appears after a failed submit) aren't measured until you trigger them, so run the script again with each state showing.
 
+## Grid overlay for critique
+
+Before the critique screenshot, lay a labelled grid over the viewport so issues can be pinned to a cell ("C2: the button wraps"). Models locate problems on a plain screenshot poorly; markers help. Remove the grid before any screenshot the user will see.
+
+```js
+(() => {
+  const g = document.createElement('div'); g.id = 'ux-grid';
+  g.style.cssText = 'position:fixed;inset:0;z-index:2147483647;pointer-events:none;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr)';
+  for (let r = 0; r < 6; r++) for (let c = 0; c < 6; c++) {
+    const cell = document.createElement('div');
+    cell.textContent = 'ABCDEF'[c] + (r + 1);
+    cell.style.cssText = 'outline:1px dashed rgb(255 0 128 / .6);font:600 11px/1 monospace;color:#ff0080;padding:2px;text-shadow:0 0 2px #fff';
+    g.append(cell);
+  }
+  document.body.append(g);
+})()
+// remove: document.getElementById('ux-grid').remove()
+```
+
 ## Forcing the unhappy path
 
 Make the slow and failing responses happen instead of waiting for them. If the page calls `fetch`, replace it for the test (Playwright MCP and DevTools MCP can also mock routes; this works in any tool):
