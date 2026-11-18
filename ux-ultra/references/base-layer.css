@@ -9,7 +9,8 @@
 */
 
 /* Hand cursor on actionable controls (Tailwind v4 removed it from buttons). Never on disabled ones. */
-button:not(:disabled),
+/* aria-disabled is excluded here too: busy buttons use it, and button:not(:disabled) would outrank the not-allowed rule below. */
+button:not(:disabled):not([aria-disabled="true"]),
 [role="button"]:not([aria-disabled="true"]),
 summary,
 label[for],
@@ -18,6 +19,10 @@ input[type="checkbox"]:not(:disabled),
 input[type="radio"]:not(:disabled) { cursor: pointer; }
 :disabled,
 [aria-disabled="true"] { cursor: not-allowed; }
+
+/* Keep `hidden` hidden. Any author display rule (.card { display: grid }) beats the browser's
+   [hidden] style, so hidden notices, filtered-out items and stale rows show up anyway. */
+[hidden] { display: none !important; }
 
 /* One visible focus ring for keyboard users; mouse clicks don't show it. */
 :focus-visible { outline: 2px solid var(--focus, currentColor); outline-offset: 2px; }

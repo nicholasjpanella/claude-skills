@@ -48,6 +48,8 @@ Several items can be fixed once for the whole project instead of per element; `r
 - Images get explicit `width`/`height` or `aspect-ratio`, so the page doesn't jump when they load.
 - Anchored headings get `scroll-margin-top` when there's a sticky header.
 - A z-index scale written down (dropdown, sticky, overlay, toast), so menus don't render behind content.
+- `[hidden]` stays hidden: any `display` rule on the same element overrides the browser's own `[hidden]` style, so a hidden notice or filtered-out item shows anyway. `base-layer.css` forces it; without that, check every element you toggle with `hidden`.
+- A sticky or pinned panel has to fit its tallest state (errors showing, a notice, a long value) inside the shortest likely viewport, about 700px tall on a laptop, or it hides its own submit button and messages. If it can't, don't pin it. Check: show every state and compare the panel's bottom edge with `innerHeight`.
 
 ## Motion
 

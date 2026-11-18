@@ -14,6 +14,8 @@ Then read the width back: `innerWidth` (or `document.documentElement.clientWidth
 
 Report the width the page actually had, not the one you asked for.
 
+**Measure the code you just wrote.** After an edit, the browser (and especially the frame) often keeps the old stylesheet or script from cache, so the checks report the previous version. Load the page with a fresh query string each round (`frame.html?src=/your-page.html?v=3&w=375`, and `?v=3` on the page's own CSS and JS links if they're cached too), or hard-reload. Then confirm the edit took before reading any number: query a rule or value you just changed (for example `getComputedStyle(el).cursor`).
+
 ## Checking the checks
 
 Before trusting the script in a new session or with a new browser tool, run it once on `assets/check-fixture.html` (serve it next to the page). That page breaks every rule on purpose. The result must flag each of: `failedFonts`, `lowContrast`, `targetsUnder24`, `unnamedControls`, `placeholderOnly`, `noPointer`, `disabledPointer`, `smallInputText`, `transitionAll`, `zoomBlocked`, `headingSkips`, `imagesWithoutAlt`, `imagesWithoutSize`, `longLines`, and a `glass` entry with `worstContrast` under 4.5 and `nested: true`. Any that comes back clean is a broken check in this environment, so don't rely on it for the real page; say which in the report.
