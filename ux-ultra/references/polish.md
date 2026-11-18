@@ -1,6 +1,6 @@
 # Polish: the details that only show up in use
 
-Agents write code and never use the page, so anything that only appears in behaviour gets skipped: the cursor, a focus ring, a button that does nothing visible for a second, a dropdown behind the content. Go through this list for every control you build. The numbers come from WCAG 2.2, Apple and Android guidance, NN/g, GOV.UK and Vercel's Web Interface Guidelines.
+Agents write code and never use the page, so anything that only appears in behaviour gets skipped: the cursor, a focus ring, a button that does nothing visible for a second, a dropdown behind the content. Go through this list for every control you build. The numbers come from WCAG 2.2 (still the standard in 2026; WCAG 3 is a working draft), Apple and Android guidance, NN/g, GOV.UK and Vercel's Web Interface Guidelines.
 
 Several items can be fixed once for the whole project instead of per element; `references/base-layer.css` does that. Check for it (or equivalent rules) in Step 0 and offer to add it.
 
@@ -60,6 +60,7 @@ Several items can be fixed once for the whole project instead of per element; `r
 - Dialogs move focus inside when they open, keep it there, close on Escape, and return focus to the control that opened them. A native `<dialog>` opened with `showModal()` does the first three.
 - Tab order follows the visual order. Nothing focusable is hidden.
 - Menus and popovers close on Escape and on a click outside.
+- Dialogs closing on a click outside depends on what they hold. An informational dialog or a confirmation can close that way. A dialog where the user has typed or chosen something must not, because one stray click loses the work. Native `<dialog closedby="any">` gives that light dismiss without JavaScript where browsers support it; check support before relying on it.
 
 ## Done means checked
 

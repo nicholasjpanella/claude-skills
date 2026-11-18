@@ -27,7 +27,7 @@ These are the rules experienced product designers apply without thinking. The co
 ## Colour
 
 - Define every shade up front: 8 to 10 greys and 5 to 10 shades of each brand colour, tuned by eye. Don't generate tints by lightening or darkening at runtime.
-- Dark mode is not an inversion. Base around #121212, lighter surfaces for higher elevation, accents about 20 points less saturated than in light mode.
+- Dark mode is not an inversion. Take dark surfaces as tonal steps from the palette (Material 3's tone-based surface roles), each step a little lighter for higher elevation, rather than hard-coding one grey such as #121212, which was Material 2's baseline. Make accents about 20 points less saturated than in light mode.
 
 ## Depth
 
@@ -50,7 +50,7 @@ Skeletons belong to containers and data views only. Never put one on a toast, a 
 ## Motion
 
 - How often an action happens decides whether it animates. Frequent actions and keyboard actions get none. Rare, meaningful moments (opening a dialog, completing a task) can.
-- 150 to 250ms for UI motion.
+- 150 to 250ms for UI motion. Spring-based motion (Material 3 Expressive's model) is a valid alternative to fixed durations and curves. On the web, approximate a spring with CSS `linear()` easing, and keep the settle time in the same range.
 
 ## Difficult data
 
