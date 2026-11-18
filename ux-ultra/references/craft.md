@@ -41,9 +41,11 @@ Match the feedback to the wait:
 | Wait | Feedback |
 |---|---|
 | Under about 300ms | Nothing; a spinner would only flash |
-| Up to a few seconds | A spinner or busy label on the part that's working, not the whole page |
-| A full page or view loading | A skeleton in the shape of the content |
-| Over about 10 seconds | A progress bar with what's happening, and a way to cancel |
+| Up to about 5 seconds | A spinner or busy label on the part that's working, not the whole page |
+| First load of a list, cards or a table | A skeleton in the shape of the content, for a few seconds at most |
+| Longer than about 5 seconds, or unknown | A progress bar with the current stage named, and a way to cancel. Indeterminate until progress can be measured, then determinate |
+
+Skeletons belong to containers and data views only. Never put one on a toast, a menu or dropdown item, or a modal itself (content inside a modal can have one). Buttons, inputs, checkboxes and toggles don't get skeletons; a busy button keeps its label and shows an indicator (see `polish.md`). Based on IBM Carbon's loading pattern, updated 2026.
 
 ## Motion
 

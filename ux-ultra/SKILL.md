@@ -81,7 +81,7 @@ When a decision would benefit from evidence (a theme system, a checkout, a dense
 
 ### Propose three directions, then stop
 
-Write three distinct directions. For each: a name, 4 to 6 named hex colours with roles, the typefaces and their roles, an ASCII wireframe of the main screen, one sentence on what makes it specific to this subject, and its tradeoff. Then flag, honestly, any part of any direction that you would have produced for any similar page; read `references/tells.md` for the clusters that currently read as defaults (all three waves). Make the three genuinely different: they should differ on at least two of palette family, type genre (serif, grotesque, mono, display) and layout structure, not be one idea in three colourways. Watch for the category's stock metaphor as well: a ledger for any finance tool, a manila repair tag for any workshop, a terminal for any developer tool. The first metaphor that comes to mind for a category is the one every other generated page uses, so it's a default too; if a direction rests on it, push it towards something only this brief has (a place, a phrase the user used, a detail of how this business works). Recommend one.
+Write three distinct directions. For each: a name, 4 to 6 named hex colours with roles, the typefaces and their roles, an ASCII wireframe of the main screen, one sentence on what makes it specific to this subject, and its tradeoff. Then flag, honestly, any part of any direction that you would have produced for any similar page; read `references/tells.md` for the clusters that currently read as defaults (all three waves). Make the three genuinely different: they should differ on at least two of palette family, type genre (serif, grotesque, mono, display) and layout structure, and layout structure must be one of the two. Across generative UI tools, colour is what varies most while layout and look converge, so three colourways of one layout are one direction, and a refresh that only changes the palette is a restyle. Watch for the category's stock metaphor as well: a ledger for any finance tool, a manila repair tag for any workshop, a terminal for any developer tool. The first metaphor that comes to mind for a category is the one every other generated page uses, so it's a default too; if a direction rests on it, push it towards something only this brief has (a place, a phrase the user used, a detail of how this business works). Recommend one.
 
 Then stop and let the user pick. Exploring in three cheap text proposals is far cheaper than exploring in code, and a direction the user chose is one they will defend later. If you are running without a user who can answer (a batch job, an eval, an explicit "just pick"), pick your recommendation, say so in one line, and continue. Picking alone is exactly when the stock metaphor wins, so check your pick against the paragraph above before building.
 
@@ -126,6 +126,7 @@ Before writing code for a screen or component, list in your plan:
 - **Where data goes.** A form with no backend or address is not finished. Say so plainly in the hand-back, never show "Sent" for a request that went nowhere, and don't invent an address to send it to.
 - **Which tokens and components it uses.** If something you need isn't in DESIGN.md, add it to DESIGN.md first (and say so) rather than inlining a one-off value.
 - **The polish details.** Read `references/polish.md` the first time you build a control in a session. It covers what agents miss because they never use the page: the cursor, hover only on hover-capable devices, 24px minimum targets (44px on touch), a spinner that waits 150 to 300ms before showing and then stays 300 to 500ms, submit enabled until it starts, focus to the first error, 16px inputs on phones, never blocking paste or zoom, `tabular-nums` for compared figures, no `transition: all`, and the long-text and empty cases.
+- **Filters, navigation and scrolling rows.** When the screen has a filterable list, mobile navigation or a horizontal row, read `references/ux-patterns.md`.
 - **Glass, if the project uses it.** When DESIGN.md chooses frosted or translucent surfaces, or the code already has `backdrop-filter`, read `references/glass.md`: readability comes from a mostly opaque surface (80 to 95%), not the blur; one blur radius; a hairline edge; more opacity the higher the layer; no glass inside glass; popovers rendered outside blurred parents; and solid fallbacks for reduced transparency, no blur support and forced colours.
 
 Then build two or three visible changes per round, no more, and state what you won't touch ("layout and colours stay as they are"). Large rounds produce diffs nobody can review and screenshots that differ in ten ways at once.
@@ -157,7 +158,7 @@ Run these in order; cheap and exact first, the screenshot last.
    | Grouping | more space between groups than within; consistent alignment |
    | Difficult data | long, empty, many-item and missing-image cases render cleanly |
    | States | empty, loading, error and disabled exist and were seen |
-   | Defaults | nothing from `references/tells.md` that DESIGN.md didn't choose |
+   | Defaults | nothing from `references/tells.md` that DESIGN.md didn't choose, and this round didn't drift back towards them |
    | Copy | real, plain verbs, sentence case |
    | Rationale | each major choice has a reason and a named tradeoff |
 
@@ -170,6 +171,8 @@ Run these in order; cheap and exact first, the screenshot last.
    - which widths you measured (and how, if you used the frame), which states you triggered, what you tabbed through and which overlays you closed with Escape, the task run's steps at each width, what the checks found and what you changed;
    - anything you didn't check, and any copy you changed that the user didn't ask you to change;
    - two to four open questions where the user's intent decides, not your taste.
+
+   Before writing the hand-back, list every design decision and functional requirement it will mention and confirm each one in a screenshot or the DOM. Drop or fix any that aren't really there. In a 2026 benchmark of generative UI tools, more than a quarter of the design choices described to users were missing from the interface they described, and a third of the functional requirements were.
 
    Claim only what you saw happen. "Focus returns to the field" needs a `document.activeElement` result after a real or forced error; "works at 375px" needs an `innerWidth` of 375; "the font loads" needs an empty `failedFonts`. If you only read the code that should do it, say "should" and that it's unverified. Quote the numbers the checks returned, and if the work is in a repo or folder the user will review, save the check output there too (for example `checks/1440.json`, `checks/375.json`), so the claims can be verified without rerunning anything. Coding agents routinely report checks that never ran, and a user can't tell from the message alone.
 
