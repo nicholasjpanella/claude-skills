@@ -1,6 +1,6 @@
 # Case studies as lesson cards
 
-Short, paraphrased lessons from public write-ups. Each card links its source and says what kind of evidence it is: **decision rationale** (why a team chose something, no numbers) or **measured outcome** (reported results, often from the company itself). Read the source before leaning on a card for a big decision; these summaries were compiled from a research note on 2026-11-13, not re-read from the originals.
+Short, paraphrased lessons from public write-ups. Each card links its source and says what kind of evidence it is: **decision rationale** (why a team chose something, no numbers) or **measured outcome** (reported results, often from the company itself). Read the source before leaning on a card for a big decision; these summaries were compiled from a research note on 2026-11-13, not re-read from the originals. Cards older than two years were checked against 2026 practice on 2026-11-18 and kept only where current practice still agrees; review them again when a card's evidence is more than two years old.
 
 Never copy text, screenshots or code from these sources into a project. Link them and say it in your own words.
 
@@ -12,6 +12,7 @@ Add a card when a write-up changes how you'd build something. Keep the format, s
 - Source: https://linear.app/now/how-we-redesigned-the-linear-ui
 - Evidence: decision rationale
 - Lesson: generate light, dark and high-contrast themes in a perceptual colour space (LCH or OKLCH) from a base colour, an accent and a contrast level, instead of hand-maintaining dozens of variables. Linear replaced 98 theme variables with 3 inputs.
+- Still current (2026): OKLCH is now the usual colour format for new CSS design systems, Tailwind v4 and shadcn themes included, so generating themes in it is the norm rather than an exception.
 - Apply when: a product needs more than one theme, or its colour variables have sprawled.
 - Check: every theme colour traces back to a token or the generator; no one-off hex values in components.
 
@@ -48,5 +49,6 @@ Add a card when a write-up changes how you'd build something. Keep the format, s
 - Source: https://stripe.com/blog/testing-the-conversion-impact-of-50-plus-global-payment-methods
 - Evidence: measured outcome (vendor's own data)
 - Lesson: offering one relevant non-card payment method raised conversion by about 7.4% on average, and Apple Pay by about 22%. What the checkout offers can matter more than how it looks.
-- Apply when: designing or restyling a checkout; ask which payment methods the audience uses before polishing the form.
+- 2026 update: Stripe's checkout trends analysis (https://stripe.com/blog/global-checkout-trends, vendor data from about 20,000 businesses, Aug 2023 to Feb 2026) adds the other side. Local methods lift conversion a lot where they're expected, and showing one that isn't relevant to the buyer's country can lower conversion by up to 15%. Relevance beats quantity.
+- Apply when: designing or restyling a checkout; ask which payment methods the audience uses, and where they are, before polishing the form. Show the relevant methods, not every method.
 - Check: the brief lists the payment methods and why.
