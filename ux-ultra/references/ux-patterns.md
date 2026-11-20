@@ -1,6 +1,6 @@
-# Filters, navigation and scrolling rows
+# Filters, navigation, scrolling rows and dashboards
 
-Read this when a screen has a filterable list, mobile navigation or a horizontal row of items. These rules come from Baymard Institute's 2025–2026 e-commerce usability benchmarks. They were tested on shops, but the problems are the same on any filterable collection. Only sources from the last two years go here. Topics with no recent evidence (data tables, list vs grid vs table, hamburger vs tab bar) are left out on purpose rather than filled from older research.
+Read this when a screen has a filterable list, mobile navigation, a horizontal row of items or a dashboard. The filter, navigation and row rules come from Baymard Institute's 2025–2026 e-commerce usability benchmarks. They were tested on shops, but the problems are the same on any filterable collection. Only sources from the last two years go here. Topics with no recent evidence (data tables, list vs grid vs table, hamburger vs tab bar) are left out on purpose rather than filled from older research.
 
 ## Filters
 
@@ -17,8 +17,22 @@ Read this when a screen has a filterable list, mobile navigation or a horizontal
 
 - Prefer showing a few items with a "Show all" control. If you do use a horizontal row, let the last visible item be visibly cut off so the row reads as scrollable, add scroll arrows on both sides for mouse users, and give screen-reader users the item count, since a cut-off item is only a visual hint.
 
+## Dashboards and charts
+
+- **One main chart.** It is the biggest data element on the screen. Everything else is smaller and a different kind of thing: a ranked list with thin bars, a short table. Never a second chart at the same size.
+- **One accent per chart.** Colour the thing that matters and put everything else in neutral steps. Use several hues only when series have to be told apart, and even then one series leads.
+- **The data picks the chart.** A trend over time is a line. A comparison is bars. A share of a whole is one stacked bar or a list with bars. Progress toward a single goal is a progress bar.
+- **Plain stat cards.** A label, a figure, and the change with what it's compared to. No sparklines, mini bars or icons added to fill the space.
+- **Vary the widths.** A row of equal cards side by side, each holding the same kind of content, reads as a template. Give the main chart more room and smaller items less.
+- **Quiet chart chrome.** Gridlines and axis labels in a muted tone. Bars in one series share one colour, never a rainbow.
+
+Adapted from the unslop skill by Damir Sokolovsky (CC BY 4.0), 2026.
+
 ## Check
 
 - Apply three filters, including two values in one type, at 375px and desktop width: the applied summary shows all of them and each removes on its own.
 - Open the mobile navigation from inside a section: the current section is marked.
 - Scroll every horizontal row with a mouse at desktop width and with a swipe at 375px.
+- Run the blur test on a dashboard: the main chart is where the eye lands, and no other chart matches its size.
+- Count the colours in each chart: one accent, unless its series must be told apart.
+- Read each stat card: every change says what it's compared to.

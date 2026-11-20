@@ -16,9 +16,14 @@ Checked against 2026 design commentary on 2026-11-18. Both the first and second 
 - One large radius and one soft shadow (`rgba(0,0,0,.1)`, `shadow-lg`) on every card.
 - Glassmorphism (backdrop blur), glows, gradient blobs behind content. Glass can be a real decision (frosted layers over media or a canvas); when it is, `glass.md` says how to do it so it doesn't read as this.
 - Every section fades and slides up on scroll.
+- Cards that scale up on hover. A colour or surface step shows the card is live without nudging the layout.
+- Headings at weight 800 or 900. Size and colour can carry the hierarchy; extra weight just shouts.
 - Always-dark mode with grey body text and uppercase labels.
 - shadcn/ui or another kit left in its default theme.
 - Filler copy: "Elevate your workflow", "Unlock the power of", "Seamless", "Supercharge", and two-beat slogans that say nothing ("Build faster. Ship smarter.").
+- Exclamation marks in interface copy ("Saved!", "You're all set!"). State what happened and stop.
+- A greeting as the headline ("Welcome back, <name> 👋"). Title the page by what it shows, or the period it covers.
+- Dashboards with a sparkline on every stat card, or a row of equal cards each holding the same chart. A stat card needs a label, the number and the change; the page needs one main chart, compact stats around it, and widths that differ by importance.
 - Placeholder people: testimonials and avatars from "Sarah Johnson", "John Doe" or "Jane Smith". Use real quotes the user gave, or leave the section out.
 
 ## Second wave (what replaced it)
@@ -47,8 +52,8 @@ Reading tells by layer helps find the ones a colour list misses.
 
 1. **Token defaults**: the font, the accent hex, one radius, one shadow.
 2. **Template structure**: hero, badge, three cards, stats, steps, CTA, regardless of what the page is for.
-3. **Decoration with no job**: gradients, glass, glow, coloured stripes on card edges, emoji as icons.
-4. **Omission**: no empty, loading or error states; no hover or focus states; every button styled as primary; the same gap between everything so nothing is grouped; no progressive disclosure. Uniformity is a tell of its own: one radius, one shadow, one weight, one padding.
+3. **Decoration with no job**: gradients, glass, glow, coloured stripes on card edges, emoji as icons, a sparkle icon on anything AI (say what the feature does instead), pulsing or pinging dots on things that aren't live (keep the pulse for what is).
+4. **Omission**: no empty, loading or error states; no hover or focus states; every button styled as primary; a change with nothing to compare it to ("+12%" where "+12% vs last month" says something); the same gap between everything so nothing is grouped; no progressive disclosure. Uniformity is a tell of its own: one radius, one shadow, one weight, one padding.
 
 The fourth layer is the one users actually hit, and the one a screenshot of the happy path never shows.
 

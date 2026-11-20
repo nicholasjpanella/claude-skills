@@ -64,6 +64,17 @@ Several items can be fixed once for the whole project instead of per element; `r
 - Menus and popovers close on Escape and on a click outside.
 - Dialogs closing on a click outside depends on what they hold. An informational dialog or a confirmation can close that way. A dialog where the user has typed or chosen something must not, because one stray click loses the work. Native `<dialog closedby="any">` gives that light dismiss without JavaScript where browsers support it; check support before relying on it.
 
+## Right to left
+
+- **Direction on the root.** `dir="rtl"` and the right `lang` on `<html>`. Use logical properties so the layout flips by itself: `margin-inline-start`, `inset-inline-start`, `text-align: start`; in Tailwind `ms-*`, `me-*`, `ps-*`, `pe-*`, `start-*`, `text-start`. Never flip a whole container with `scaleX(-1)`; it mirrors the text inside too.
+- **Icons.** Mirror only icons that show direction or order: back and forward, chevrons, undo and redo, send. Leave media controls, clocks, checkmarks, search and logos as they are.
+- **Mixed text.** Put Latin words, numbers, codes and anything the user typed in `<bdi>`, or give them `unicode-bidi: isolate`, so they don't drag nearby punctuation to the wrong side. Signed numbers go in `<bdi dir="ltr">`, or `+12%` shows as `12%+`.
+- **Inputs.** Email, URL, phone and code fields stay `dir="ltr"`, aligned to the end so they line up with the other fields.
+- **Digits.** One digit system per screen. Format with `Intl.NumberFormat` for the locale, not by hand.
+- **Arabic script.** Letter spacing always 0; any tracking pulls the joined letters apart. No italic; browsers fake it by slanting the glyphs. Body line height about 1.6 to 1.8, and sizes a step larger than for Latin text. Use a family drawn for the script, not a Latin one with a system fallback.
+
+Logical properties per MDN's guide (updated November 2025). Adapted from the unslop skill by Damir Sokolovsky (CC BY 4.0), 2026.
+
 ## Done means checked
 
 Before saying a UI change is done, say what you checked and how: which widths, which states you triggered, what you tabbed through, which overlays you closed with Escape. If something wasn't checked, say so. Don't update visual-test baselines (`--update-snapshots`) to make a failing test pass.

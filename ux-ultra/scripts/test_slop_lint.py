@@ -22,6 +22,11 @@ SLOP = """export default function Hero() {
     <h1 className="bg-clip-text text-transparent">Elevate</h1>
     <a href="/x">Learn more →</a>
     <span>🚀</span>
+    <h2 className="font-extrabold">Welcome back, Sam</h2>
+    <span className="animate-ping" /><span>✨</span>
+    <div className="skeleton animate-pulse" />
+    <div className="hover:scale-105 active:scale-95 hover:scale-95" />
+    <div className="group-hover:scale-[1.02] font-[900]" style={{ fontWeight: 800 }} />
     <div className="rounded-2xl shadow-lg backdrop-blur" /><div className="rounded-2xl shadow-lg backdrop-blur" />
     <div className="rounded-2xl shadow-lg fade-up" /><div className="rounded-2xl shadow-lg fade-up" />
     <div className="rounded-2xl fade-up animate-in" /><div className="rounded-2xl" />
@@ -32,7 +37,14 @@ CSS = """.btn { color: #2f6b4f; background: #f00; font-family: Inter, sans-serif
 #fab {
   color: #F6F3EE;
 }
+.card:hover { transform: translateY(-2px) scale(1.03); }
+.card:active { transform: scale(0.97); }
+.live { animation: pulse 2s infinite; }
+h1 { font-weight: 900; }
+.tile:hover { scale: 1.05; }
+.pill:hover { scale: 105%; }
 """
+NEW_RULES = {"pulse-not-live", "hover-scale", "heavy-heading", "greeting-headline"}
 CLEAN_CSS = """.btn { color: var(--accent); font-family: "Source Sans 3", sans-serif; }
 .btn:focus-visible { outline: 2px solid #2F6B4F; }
 @media (prefers-reduced-motion: reduce) { * { transition: none; } }
@@ -65,6 +77,10 @@ with tempfile.TemporaryDirectory() as d:
     offp = [f for f in found if f["rule"] == "off-palette-color"]
     msgs = sorted(f["message"].split()[1] for f in offp)
     assert msgs == ["#f00", "from-indigo-500", "to-blue-500"], msgs  # #fab selector and token hexes not flagged
+    got = [f["rule"] for f in found]
+    for r in NEW_RULES:
+        assert got.count(r) == {"hover-scale": 5, "pulse-not-live": 2, "heavy-heading": 4}.get(r, 1), (r, got)
+    assert "✨" in [f["message"].split()[1] for f in found if f["rule"] == "emoji-icon"], found
 
     (root / "src/app.css").write_text(CLEAN_CSS)
     (root / "src/Hero.tsx").unlink()
@@ -101,6 +117,15 @@ with tempfile.TemporaryDirectory() as d:
                               '<input onpaste="track()">')
     got = {f["rule"] for f in L.run([str(p)])[1]}
     assert not got & {"zoom-blocked", "paste-blocked", "no-cursor-rule", "button-no-type", "transition-all"}, got
+
+    # presses, resets, plain bold and non-pulse motion are fine; a greeting only counts in markup
+    (p / "a.html").write_text('<button type="button" class="cursor-pointer hover:scale-100 active:scale-95 hover:scale-95 hover:scale-[0.98] hover:scale-[1] font-bold font-[700]" style="fontWeight: 700">Save</button>')
+    (p / "b.css").write_text(".b:active { transform: scale(0.97) } .c:hover { transform: scale(1) } .d:hover { color: red }"
+                             " .e { transform: scale(1.1) } h1 { font-weight: 700 } .s { animation: spin 1s }"
+                             ' .w::after { content: "Welcome back" }'
+                             " .f:hover { scale: 0.98 } .g:hover { scale: 1 } .h:hover { scale: 100% } .i:hover { scale: 15% }")
+    assert not {f["rule"] for f in L.run([str(p)])[1]} & NEW_RULES
+    (p / "b.css").unlink()
 
     # font shorthand: family after size/line-height is checked; `font: inherit` is not a family
     (p / "a.html").write_text('<style>body { font: 400 17px/1.55 "Roboto", sans-serif } input { font: inherit }'

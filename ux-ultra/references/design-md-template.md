@@ -11,7 +11,14 @@ The `tokens` block is read by `scripts/slop_lint.py`. Keep it in sync with the p
 
 ## Direction
 
-*Name of the chosen direction and two or three sentences on it. What is the one memorable thing? Everything else stays quiet.*
+*Name of the chosen direction and two or three sentences on it. What is the one memorable thing? Everything else stays quiet. Don't describe it as clean, modern, sleek, minimal or premium; those words fit every template.*
+
+- **Moments:** *one or two places that get rich colour, material or detail, chosen from what the product shows. Everything else stays quiet.*
+- **Signature:** *one small detail only this product would have, and where it is used. One, not five; use it the same way everywhere.*
+
+### Directions considered
+
+*All three directions from Step 1, the chosen one included, one short block each: name, palette (background and accent hex), type genre, layout structure, and why it was or wasn't picked. A later session uses this to see what was already ruled out.*
 
 ## Tokens
 

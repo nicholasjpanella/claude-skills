@@ -33,6 +33,7 @@ These are the rules experienced product designers apply without thinking. The co
 
 - One light source for the whole UI. Higher elevation means more offset and more blur.
 - Layered shadows tinted with the background hue look real; a single grey `rgba(0,0,0,.1)` looks pasted on.
+- Nested corners: inner radius = outer radius minus the padding between them, never below about 4px, so the corners look concentric. Adapted from the unslop skill by Damir Sokolovsky (CC BY 4.0), 2026.
 
 ## Waiting
 
@@ -51,6 +52,18 @@ Skeletons belong to containers and data views only. Never put one on a toast, a 
 
 - How often an action happens decides whether it animates. Frequent actions and keyboard actions get none. Rare, meaningful moments (opening a dialog, completing a task) can.
 - 150 to 250ms for UI motion. Spring-based motion (Material 3 Expressive's model) is a valid alternative to fixed durations and curves. On the web, approximate a spring with CSS `linear()` easing, and keep the settle time in the same range.
+
+## Hero visuals
+
+- Only screens that need a visual get one: landing heroes, empty states, onboarding. Dashboards and settings almost never do.
+- Write the visual's subject as one plain sentence before making anything. If you can't, the idea isn't clear yet.
+- The default visual is a preview of the product built in code, showing the one moment that proves the headline, not the whole app. Fill it only with facts the brief gives; the "Only facts you were given" rule in SKILL.md still applies.
+- Match the image's edges to the page background, or fade them with a mask. A hard rectangle of another colour looks pasted in.
+- No text, logos or fake UI inside a generated image. Give every image fixed dimensions.
+- Image generation is optional. If a tool for it is available, show the user the prompt, model and size and ask before running it, since it can cost money. If not, leave an empty slot at the final size and put the prompt in the hand-back.
+- Avoid the stock generated look: no glossy blobs, orbs, nebulas, robots or glowing brains unless the product is literally about them.
+
+Adapted from the unslop skill by Damir Sokolovsky (CC BY 4.0), 2026.
 
 ## Difficult data
 

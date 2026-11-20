@@ -44,6 +44,10 @@ RULES = {  # id: (default severity, scope, message)
     "gradient-text": ("warn", "file", "gradient-filled text"),
     "arrow-link": ("warn", "file", "arrow appended to link or button text"),
     "emoji-icon": ("warn", "file", "emoji {x} used in markup, likely as an icon"),
+    "pulse-not-live": ("warn", "file", "pulsing animation ({x}); keep it for things that are actually live"),
+    "hover-scale": ("warn", "file", "scales up on hover ({x}); a colour or surface step doesn't shift the layout"),
+    "heavy-heading": ("warn", "file", "800–900 weight ({x}); hierarchy from size and colour"),
+    "greeting-headline": ("warn", "file", "greeting as a headline ({x}); title the page or the period it covers"),
     "uppercase-eyebrow": ("warn", "project", "{x} uppercase tracked-out labels (eyebrow chrome)"),
     "single-radius": ("warn", "project", "one radius ({x}) on everything"),
     "default-shadow": ("warn", "project", "the same soft shadow repeated {x} times"),
@@ -91,6 +95,15 @@ ACCENT = re.compile(r"\b(?:bg|text|from|via|to|border|ring|fill|stroke|shadow|ou
 GRAD_TEXT = re.compile(r"background-clip\s*:\s*text|bg-clip-text[^\"'`]*text-transparent|text-transparent[^\"'`]*bg-clip-text")
 ARROW = re.compile(r"(?:\w|['\"])\s*(?:→|&rarr;|&#8594;)\s*(?:<|['\"`]|$)", re.M)
 EMOJI = re.compile("[\U0001F300-\U0001FAFF✨⚡✅]")
+PULSE = re.compile(r"(?<![\w-])animate-(?:pulse|ping)(?![\w-])|animation(?:-name)?\s*:[^;}\n]*\b(?:pulse|ping)")
+# scale-100 and below are presses or resets, not growth; the CSS form stays inside one :hover block
+GROW = r"(?:1\.\d*[1-9]|[2-9](?:\.\d+)?|[1-9]\d+(?:\.\d+)?)"  # a scale factor above 1
+HOVER_SCALE = re.compile(r"\bhover:scale-(?:1(?:0[1-9]|[1-9]\d)(?![\w-])|\[" + GROW + r"\])"
+                         r"|:hover[^{}]*\{[^{}]*?(transform\s*:[^;}]*scale\(\s*" + GROW + r"[^;})]*\)"
+                         r"|(?<![\w-])scale\s*:\s*(?:" + GROW + r"(?![\d.%])|(?:10[1-9]|1[1-9]\d|[2-9]\d\d)%))")
+HEAVY = re.compile(r"(?<![\w-])font-(?:extrabold|black|\[(?:800|900)\])(?![\w-])"
+                   r"|font-weight\s*:\s*(?:800|900)\b|fontWeight\s*:\s*[\"']?(?:800|900)\b")
+GREETING = re.compile(r"welcome back\b[^<\"'`]*", re.I)
 EYEBROW = re.compile(r"[\"'`][^\"'`]*\buppercase\b[^\"'`]*\btracking-(?:wide|wider|widest|\[)[^\"'`]*[\"'`]|[\"'`][^\"'`]*\btracking-(?:wide|wider|widest|\[)[^\"'`]*\buppercase\b[^\"'`]*[\"'`]|text-transform\s*:\s*uppercase[^}]*letter-spacing|letter-spacing[^}]*text-transform\s*:\s*uppercase")
 RADIUS = re.compile(r"border-radius\s*:\s*([^;}\n]+)|\b(rounded(?:-(?:sm|md|lg|xl|2xl|3xl|\[[^\]]+\]))?)(?![\w-])")
 SHADOW = re.compile(r"box-shadow\s*:\s*([^;}\n]+)|\b(shadow(?:-(?:sm|md|lg|xl|2xl))?)(?![\w-])")
@@ -248,11 +261,21 @@ def lint_file(path, text, design):
         out.append(("default-accent", line_of(text, m.start()), m.group(0)))
     for m in GRAD_TEXT.finditer(text):
         out.append(("gradient-text", line_of(text, m.start()), ""))
+    for m in PULSE.finditer(text):
+        if "skeleton" in lines[line_of(text, m.start()) - 1].lower():
+            continue  # skeleton loaders pulse on purpose; craft.md recommends them
+        out.append(("pulse-not-live", line_of(text, m.start()), m.group(0).strip()))
+    for m in HOVER_SCALE.finditer(text):
+        out.append(("hover-scale", line_of(text, m.start()), m.group(1) or m.group(0)))
+    for m in HEAVY.finditer(text):
+        out.append(("heavy-heading", line_of(text, m.start()), m.group(0)))
     if ext in MARKUP_EXT:
         for m in ARROW.finditer(text):
             out.append(("arrow-link", line_of(text, m.start()), ""))
         for m in EMOJI.finditer(text):
             out.append(("emoji-icon", line_of(text, m.start()), m.group(0)))
+        for m in GREETING.finditer(text):
+            out.append(("greeting-headline", line_of(text, m.start()), m.group(0).strip()[:40]))
     for rid, rx in LEARNED:
         for m in rx.finditer(text):
             out.append((rid, line_of(text, m.start()), m.group(0)[:60]))
